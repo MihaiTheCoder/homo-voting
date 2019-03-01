@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5F64034A-D102-4572-B7CD-C85138969A6C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharedKeyManager</RootNamespace>
+    <AssemblyName>SharedKeyManager</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Moserware.SecretSplitter, Version=0.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moserware.SecretSplitter.0.12.0.0\lib\net40\Moserware.SecretSplitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SEALNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Microsoft.Research.SEALNet.3.2.0\lib\netstandard2.0\SEALNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Db\FakeCentralDbRepository.cs" />
+    <Compile Include="Db\ICentralDbRepository.cs" />
+    <Compile Include="Hsm\AesKey.cs" />
+    <Compile Include="Hsm\FakeHsmFactory.cs" />
+    <Compile Include="Hsm\FakeInitializedHSM.cs" />
+    <Compile Include="Keys\HomomorphicKeyManager.cs" />
+    <Compile Include="Hsm\HsmFactory.cs" />
+    <Compile Include="Hsm\InitializedHSM.cs" />
+    <Compile Include="Keys\KeySerializer.cs" />
+    <Compile Include="Keys\IKeyManager.cs" />
+    <Compile Include="Keys\SerializedKeyPair.cs" />
+    <Compile Include="Keys\PasswordGenerator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShareHolder\DummyFolderIO.cs" />
+    <Compile Include="ShareHolder\IAuthenticatedShareHolder.cs" />
+    <Compile Include="SecretSplitterSamples.cs" />
+    <Compile Include="ShareHolder\IDeviceIO.cs" />
+    <Compile Include="ShareHolder\IPublicShareHolder.cs" />
+    <Compile Include="ShareHolder\PasswordProtectedShareHolder.cs" />
+    <Compile Include="ShareManager.cs" />
+    <Compile Include="VoteAnalysis\VoteAggregator.cs" />
+    <Compile Include="VoteAnalysis\VoteReader.cs" />
+    <Compile Include="VotingPlace\BoothInit.cs" />
+    <Compile Include="VotingPlace\Candidate.cs" />
+    <Compile Include="VotingPlace\FakeLocalBoothFinder.cs" />
+    <Compile Include="VotingPlace\ILocalBoothFinder.cs" />
+    <Compile Include="VotingPlace\IVoter.cs" />
+    <Compile Include="VotingPlace\PublicVote.cs" />
+    <Compile Include="VotingPlace\SignCertificate.cs" />
+    <Compile Include="VotingPlace\Vote.cs" />
+    <Compile Include="VotingPlace\Voter.cs" />
+    <Compile Include="VotingPlace\VotingBooth.cs" />
+    <Compile Include="VotingPlace\VotingPlace.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Research.SEALNet.3.2.0\build\Microsoft.Research.SEALNet.targets" Condition="Exists('..\packages\Microsoft.Research.SEALNet.3.2.0\build\Microsoft.Research.SEALNet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Research.SEALNet.3.2.0\build\Microsoft.Research.SEALNet.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Research.SEALNet.3.2.0\build\Microsoft.Research.SEALNet.targets'))" />
+  </Target>
+</Project>
